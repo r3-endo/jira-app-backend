@@ -1,3 +1,5 @@
+# モデルと連携してJSON形式のレスポンスを作成する。ユーザに提示するデータ内容を記述する。
+# genericsViewは特定の操作に特化した制約。ViewSetはModelに対する操作全般の制約。
 from django.shortcuts import render
 from rest_framework import status, permissions, generics, viewsets
 from .serializers import UserSerializer, ProfileSerializer, CategorySerializer, TaskSerializer
@@ -8,7 +10,8 @@ from . import custompermissions
 
 
 # 新規ユーザ作成
-# ユーザの作成、取得、ログインユーザの取得（Userモデル）に対する操作は別のクラスで管理するため、APIViewを使用
+# Create専用のエンドポイント
+# ユーザの作成、取得、ログインユーザの取得（Userモデル）に対する操作は別のクラスで管理するため、genericsのAPIViewを使用
 class CreateUserView(generics.CreateAPIView):
     serializer_class = UserSerializer
     # 登録時は誰でもアクセスできるようpermissionを変えておく必要があるため
@@ -16,6 +19,8 @@ class CreateUserView(generics.CreateAPIView):
 
 
 # ユーザリスト取得
+# Read-Onlyのエンドポイント
+# モデルインスタンスをコレクションとして出力
 class ListUserView(generics.ListAPIView):
     # Userオブジェクトを全て取得
     queryset = User.objects.all()
@@ -23,6 +28,8 @@ class ListUserView(generics.ListAPIView):
 
 
 # ログインユーザ取得
+# Read-Onlyのエンドポイント
+# Keyに紐づくモデルインスタンスを出力
 class LoginUserView(generics.RetrieveAPIView):
     serializer_class = UserSerializer
 
@@ -42,7 +49,7 @@ class ProfileViewSet(viewsets.ModelViewSet):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
 
-    # フロントエンドからログインしているユーザを指定しなくてもよくするため
+    # フロントエンドからプロフィールを指定しなくてもログインしているユーザを特定できるようにするため
     # ログインユーザのプロフイールを格納する
     def perform_create(self, serializer):
         serializer.save(user_profile=self.request.user)

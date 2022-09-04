@@ -1,3 +1,4 @@
+# モデルクラスとテーブルの紐付けを行う。ビジネスロジックも実装。
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator
@@ -10,8 +11,10 @@ def upload_avatar_path(instance, filename):
 
 
 class Profile(models.Model):
+    # ユーザモデルと1対1の関係にする
     user_profile = models.OneToOneField(
         User, related_name='user_profile',
+        # ユーザが削除されたタイミングでプロフィールも削除する
         on_delete=models.CASCADE
     )
     img = models.ImageField(blank=True, null=True, upload_to=upload_avatar_path)

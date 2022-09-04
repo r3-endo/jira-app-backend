@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 拡張
+    # REST APIとしてアプリを稼働させるため。認証も行う
     'corsheaders',
     'rest_framework',
     'api.apps.ApiConfig',
@@ -59,7 +59,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# CORSのホワイトリスト設定
+# CORSのホワイトリスト設定。フロントエンドからのアクセスを許可する
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:3000"
 ]
@@ -84,7 +84,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'jira_api.wsgi.application'
 
-# パーミッションの設定と認証方法の指定
+# パーミッションの設定と認証方法の指定。認証通っているユーザのみAPIを許可。
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
@@ -94,7 +94,7 @@ REST_FRAMEWORK = {
     ],
 }
 
-# JWTトークンのカスタマイズ
+# JWTトークンのカスタマイズ。有効期限は30分
 SIMPLE_JWT = {
     'AUTH_HEADER_TYPES': ('JWT',),
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),

@@ -13,6 +13,8 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+# URLパターンとビューのマッチング情報などを保持したモジュール
+# 実際のURLパターンをapi直下のurls.pyに移譲している
 # import
 from django.contrib import admin
 from django.urls import path, include

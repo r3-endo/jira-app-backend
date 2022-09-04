@@ -1,3 +1,4 @@
+# adminサイトで操作可能なモデル
 from django.contrib import admin
 # import
 from .models import Category, Task, Profile

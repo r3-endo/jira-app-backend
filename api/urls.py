@@ -1,3 +1,5 @@
+# customで作成するurls
+# URLパターンとビューのマッチング情報などを保持したモジュール
 from django.urls import path, include
 from rest_framework import routers
 from .views import TaskViewSet, CategoryViewSet, CreateUserView, ListUserView, LoginUserView, ProfileViewSet

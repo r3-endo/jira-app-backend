@@ -1,4 +1,4 @@
-# APIリクエストの橋渡し
+# APIリクエストをモデルへ渡す役割。jsonのレスポンスを細かく制御する
 from rest_framework import serializers
 from .models import Category, Task, Profile
 from django.contrib.auth.models import User
